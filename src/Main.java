@@ -1,3 +1,7 @@
+import java.util.LinkedList;
+import java.util.Locale;
+import java.util.Stack;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -7,9 +11,74 @@ public class Main {
         System.out.println(checkForPalindrome("hello"));
         System.out.println(checkForPalindrome("Don't node"));
 
+        System.out.println("*************");
+
+        System.out.println(checkForPalindromeF("abccba"));
+        System.out.println(checkForPalindromeF("Was it a car or a cat I saw ?"));
+        System.out.println(checkForPalindromeF("I did, did I?"));
+        System.out.println(checkForPalindromeF("hello"));
+        System.out.println(checkForPalindromeF("Don't node"));
+
+
+        System.out.println("----------------");
+        System.out.println(binary(5));
+        System.out.println(binary(6));
+        System.out.println(binary(13));
     }
 
     public static boolean checkForPalindrome(String text) {
-        return false;
+        LinkedList<Character> stack = new LinkedList<>();
+        StringBuilder noPunctionString = new StringBuilder();
+        String lowerCase = text.toLowerCase(Locale.ENGLISH);
+        for (int i = 0; i<lowerCase.length(); i++){
+            char c = lowerCase.charAt(i);
+            if(c >= 'a' && c<='z'){
+                noPunctionString.append(c);
+                stack.push(c);
+            }
+        }
+        StringBuilder reversed = new StringBuilder();
+        while (!stack.isEmpty()){
+            reversed.append(stack.pop());
+        }
+        return noPunctionString.toString().equals(reversed.toString());
     }
-}
+
+    public static boolean checkForPalindromeF(String text){
+        LinkedList<Character> stack = new LinkedList<>();
+        LinkedList<Character> queue = new LinkedList<>();
+        String lowerCase = text.toLowerCase(Locale.ENGLISH);
+        for (int i = 0; i < lowerCase.length(); i++){
+            char c = lowerCase.charAt(i);
+            if (c >='a' && c <= 'z'){
+                queue.addLast(c);
+                stack.push(c);
+            }
+        }
+        if (stack.equals(queue)){
+            return true;
+        }
+        return false;
+        }
+
+    public static String binary(int num){
+//
+        Stack digits = new Stack();
+
+        while (num > 0){
+            digits.push(num % 2);
+            num = num / 2;
+        }
+        String bits = "";
+        while (!digits.isEmpty()){
+            bits += digits.pop();
+        }
+        return bits;
+
+
+    }
+
+
+
+
+    }
